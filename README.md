@@ -10,3 +10,8 @@ Saves config in localStorage, so each new machine instalation requires reconfigu
 Very simple, easy to configure.
 
 Configs in app. No messing with config files.
+
+To use it, you need node-webkit installed or in the same folder as lemu.nw.
+
+To compile it, just zip everything to a file called lemu.nw. Or follow node-webkit instructions on its github 
+page. The script lemu.nw does that.
