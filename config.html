@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta http-equiv="content-type" content="text/html;charset=utf-8" />
+		<link href="corpo.css" rel="stylesheet" type="text/css" >
+		<script src="jquery.min.js"></script>
+		<title>l'emu</title>
+	</head>
+	<body>
+		<script>
+			var gui = require('nw.gui');
+			var win = gui.Window.get();
+			//win.maximize();
+			///////////////////////////
+			/// vars e tal
+			////////////////
+			
+		</script>
+		<div id="top">
+            		<p id="tit">l'emu</p>
+            		<p id="slo">configuration -----</p>
+			<hr>
+        	</div><br><br>
+		<input type="file" webkitdirectory style="display:none;" id="seldir"/><br>
+		<div id="center">			
+			<a class="button" href="index.html">  ←  back </a>
+								
+			<!-- <a class="button" href="javascript:void(0)" onclick="chooseFile('#seldir');">sel roms dir</a>
+			-->
+			<input type="text" placeholder="machine (snes,n64,etc)" id="maq">
+			<input type="text" placeholder="exention (z64,smc, etc)" id="ext">
+			<input type="text" placeholder="exec (snes9x,mame.exe,etc)" id="exe">
+			<a class="button" href="javascript:void(0)" onclick="addemu();">+ emulator</a>
+			<a class="button" href="javascript:void(0)" onclick="chooseFile('#seldir');">+ rom dir</a>			
+						
+			<br><br>
+			<!-- <textarea style="width:50%;" id="emucfg"></textarea>
+			<br>
+			<a class="button" href="javascript:void(0)" onclick="saveemustr()">save emus</a>
+			<br><br>
+			-->
+			
+			<p id="log"></p>
+			<br><br>
+			<!--dirs list<br>
+			<textarea style="width:50%;" id="dirscfg"></textarea>
+			<br>
+			<a class="button" href="javascript:void(0)" onclick="savedirstr()">save dirs list</a>
+			-->
+		</div>
+	</body>
+	<script>
+		/////////////////////////////////
+		// get config from localstorage
+		///////////////
+		var maqstr = '';
+		var extstr = '';
+		var exestr = '';
+		if (localStorage.maqstr != null) maqstr = localStorage.maqstr;
+		if (localStorage.extstr != null) extstr = localStorage.extstr;
+		if (localStorage.exestr != null) exestr = localStorage.exestr;
+		var maq = maqstr.split(';');
+		var ext = extstr.split(';');
+		var exe = exestr.split(';');
+		var dirstr='';
+		if (localStorage.dir != null) dir = localStorage.dir;
+		if (localStorage.dirstr != null) dirstr = localStorage.dirstr;
+		dirs=dirstr.split(';');
+		//document.getElementById('dirscfg').innerHTML=dirstr;
+		////////////////////
+		// print it to onpage log
+		///////////////
+		for (i=0;i < maq.length;i++) {
+			log.innerHTML=log.innerHTML+'<br>emulator: '+maq[i]+'; .'+ext[i]+'; '+exe[i]+
+			' <a style="color:#fa3333" href="javascript:void(0)" onclick="delemu('+i+')">[del]</a>';
+		}
+		for (i=0;i < dirs.length;i++) {
+			log.innerHTML=log.innerHTML+'<br>directory: '+dirs[i]+
+			' <a style="color:#fa3333" href="javascript:void(0)" onclick="deldir('+i+')">[del]</a>';;
+		}		
+		///////////////////////////////
+		// functions
+		//////////////////////
+		log=document.getElementById('log');
+		function chooseFile(name) {
+	    	var chooser = document.querySelector(name);
+	    	chooser.addEventListener("change", function(evt) {
+				dirv=this.value;
+				console.log('adding dir '+dirv);
+				dirs.push(dirv);
+				localStorage.dirstr=dirs.join(';');				
+				log.innerHTML=log.innerHTML+'<br>added directory: '+dirv;
+			}, false);
+			chooser.click();
+			//location.reload();  
+  		}
+		function addemu(){
+			maqv=document.getElementById('maq').value;
+			extv=document.getElementById('ext').value;
+			exev=document.getElementById('exe').value;
+			log.innerHTML=log.innerHTML+'<br>added emulator '+maqv+' with rom extension '+extv+' that uses '+exev;
+			maq.push(maqv);
+			ext.push(extv);
+			exe.push(exev);			
+			localStorage.maqstr=maq.join(';');
+			localStorage.extstr=ext.join(';');
+			localStorage.exestr=exe.join(';');
+			location.reload();
+		}
+		//function savedirstr(){
+		//	localStorage.dirstr=document.getElementById('dirscfg').value;
+		//	location.reload();
+		//}
+		function delemu(n){
+			maq.splice(n,1);
+			ext.splice(n,1);
+			exe.splice(n,1);
+			localStorage.maqstr=maq.join(';');
+			localStorage.extstr=ext.join(';');
+			localStorage.exestr=exe.join(';');
+			location.reload();
+		}
+		function deldir(n){
+			dirs.splice(n,1);
+			localStorage.dirstr=dirs.join(';');
+			location.reload();
+		}
+	</script>
+</html>
