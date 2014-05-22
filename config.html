@@ -42,6 +42,7 @@
 			
 			<p id="log"></p>
 			<br><br>
+            <p id="hlog"></p>
 			<!--dirs list<br>
 			<textarea style="width:50%;" id="dirscfg"></textarea>
 			<br>
@@ -66,7 +67,7 @@
 		if (localStorage.dir != null) dir = localStorage.dir;
 		if (localStorage.dirstr != null) dirstr = localStorage.dirstr;
 		dirs=dirstr.split(';');
-		//document.getElementById('dirscfg').innerHTML=dirstr;
+		document.getElementById('hlog').innerHTML=dirstr;
 		////////////////////
 		// print it to onpage log
 		///////////////

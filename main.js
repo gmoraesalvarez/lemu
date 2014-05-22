@@ -2,7 +2,7 @@
 /// vars and requires
 ////////////////////////////////////
 var fs = require('fs');
-var sys = require('sys')
+var sys = require('sys');
 var exec = require('child_process').exec;
 var dir = '/';
 
@@ -13,16 +13,17 @@ list = document.getElementById('list');
 var maqstr = '';
 var extstr = '';
 var exestr = '';
-if (localStorage.maqstr != null) maqstr = localStorage.maqstr;
-if (localStorage.extstr != null) extstr = localStorage.extstr;
-if (localStorage.exestr != null) exestr = localStorage.exestr;
+if (localStorage.maqstr !== null) maqstr = localStorage.maqstr;
+if (localStorage.extstr !== null) extstr = localStorage.extstr;
+if (localStorage.exestr !== null) exestr = localStorage.exestr;
 var maq = maqstr.split(';');
 var ext = extstr.split(';');
 var exe = exestr.split(';');
 
 var dirstr='';
-if (localStorage.dir != null) dir = localStorage.dir;
+if (localStorage.dir !== null) dir = localStorage.dir;
 if (localStorage.dirstr != null) dirstr = localStorage.dirstr;
+dirstr=dirstr.replace(/\\/g,'/');
 dirs=dirstr.split(';');
 ////////////////////////////////////
 /// startup
@@ -32,11 +33,12 @@ list.innerHTML='carregando...';
 fs.readdir(dir, files_result);
 
 ldirs=document.getElementById('dirs');
+ldirs.innerHTML=ldirs.innerHTML+dir;
 for (i=0;i<dirs.length;i++) {
 	ledir=dirs[i];
 	ledirnameArr=dirs[i].split('/');
-	ledirname=ledirnameArr[ledirnameArr.length-2]+'/'+ledirnameArr[ledirnameArr.length-1];
-	ldirs.innerHTML=ldirs.innerHTML+"<a class='button' href='javascript:void(0)' onclick='changedir(\""+ledir+"\")'>"+ledirname+"</a>";
+	ledirname=ledirnameArr[ledirnameArr.length-1];
+    ldirs.innerHTML=ldirs.innerHTML+"<a class='button' href='javascript:void(0)' onclick='changedir(\""+ledir+"\")'>"+ledirname+"</a>";
 }
 ////////////////////////////////////
 /// callbacks
@@ -60,10 +62,11 @@ function puts(error, stdout, stderr) { console.log(stdout) }
 /// proper functions
 ////////////////////////////////////
 function launch(filename){
-	console.log('launching '+filename);
+	hlog=document.getElementById('hlog');
+    hlog.innerHTML=hlog.innerHTML+'<br>launching '+filename;
 	emu_exec = 'echo';
 	emu_exec = exe[ext.indexOf(filename.substr(filename.length-3))];
-	//console.log(filename+" --> "+emu_exec);
+	hlog.innerHTML=hlog.innerHTML+'<br>execline: '+emu_exec+" \""+dir+"/"+filename+"\"";
 	exec(emu_exec+" \""+dir+"/"+filename+"\"", puts);
 }
 
