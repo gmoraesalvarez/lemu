@@ -11,13 +11,7 @@ Very simple, easy to configure.
 
 Configs in app. No messing with config files.
 
-To compile it, just zip everything to a file called lemu.nw. Or follow node-webkit instructions on its github 
-page. The script lemu.nw does that.
+To pack/install it, just zip everything to a file called lemu.nw. Or follow node-webkit instructions on its github 
+page. The script lemu.sh does that. If node-webkit is installed it should work just fine.
 
-Download:
-
-<a href="http://moreasalvarez.com/web/download/lemu.zip">windows</a>
-<a href="http://moreasalvarez.com/web/download/lemu.nw">linux/mac/universal</a>
-
-Linux/mac version does not include node-webkit. Have it installed. Windows users with node-webkit installed may 
-download from the linux/mac link, since it is universal.
+If node-webkit is not installed, put a copy of it (full) along with the files in a folder of your choice and execute "nw.exe" (or just "nw").
